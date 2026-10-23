@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JavaScript Chapter 2 Practice</title>
 </head>
 <body>
     <script>
         let i = 0;
 
 while (i < 5) {
-  let number = Number(prompt("Guess the number:"));
+  const answer = prompt("Guess the number (you have 5 attempts):");
+  if (answer === null) break;
+  const number = Number(answer);
+  if (answer.trim() === "" || !Number.isFinite(number)) {
+    console.log("Enter a valid number.");
+    continue;
+  }
   i++;
 
   if (number === 15) {
@@ -22,6 +28,388 @@ while (i < 5) {
     console.log("high");
   }
 }
+// JavaScript Chapter 2 — Questions 1 to 21
+// Each question is separated by a comment.
+// Open this HTML file in a browser and view results in its developer console.
+
+async function ask(question) {
+  const answer = window.prompt(question);
+  if (answer === null) throw new Error("Exercise cancelled.");
+  return answer.trim();
+}
+
+async function askNumber(question) {
+  while (true) {
+    const answer = await ask(question);
+    const number = Number(answer);
+    if (answer !== "" && Number.isFinite(number)) return number;
+    console.log("Enter a valid number.");
+  }
+}
+
+// Q1 — Student Attendance
+async function q1() {
+  const attendance = await askNumber("Enter attendance percentage: ");
+
+  if (attendance >= 75) {
+    console.log("Student is allowed to sit for the examination.");
+  } else {
+    console.log("Student is not allowed to sit for the examination.");
+  }
+}
+
+// Q2 — Online Shopping Discount
+async function q2() {
+  const amount = await askNumber("Enter the total order amount: ");
+
+  if (amount > 100) {
+    console.log("Discount applied.");
+  } else {
+    console.log("No discount.");
+  }
+}
+
+// Q3 — Electricity Usage
+async function q3() {
+  const units = await askNumber("Enter the number of electricity units: ");
+
+  if (units > 500) {
+    console.log("High electricity usage.");
+  }
+}
+
+// Q4 — Exam Result
+async function q4() {
+  const mark = await askNumber("Enter the exam mark: ");
+
+  if (mark >= 50) {
+    console.log("Pass.");
+  } else {
+    console.log("Fail.");
+  }
+}
+
+// Q5 — Delivery Eligibility (Ternary Operator)
+async function q5() {
+  const amount = await askNumber("Enter the order amount: ");
+  const message =
+    amount >= 50 ? "Free Delivery" : "Delivery Fee Applies.";
+
+  console.log(message);
+}
+
+// Q6 — Library Membership (Ternary Operator)
+async function q6() {
+  const answer = (await ask("Do you have a valid membership? (yes/no): "))
+    .toLowerCase();
+
+  const message =
+    answer === "yes" ? "Access Granted" : "Access Denied";
+
+  console.log(message);
+}
+
+// Q7 — Student Scholarship (Logical AND)
+async function q7() {
+  const gpa = await askNumber("Enter the GPA: ");
+  const attendance = await askNumber("Enter attendance percentage: ");
+
+  if (gpa >= 3.0 && attendance >= 80) {
+    console.log("Eligible for Scholarship");
+  } else {
+    console.log("Not Eligible");
+  }
+}
+
+// Q8 — Login Access (Logical AND)
+async function q8() {
+  const username = await ask("Enter the username: ");
+  const password = await ask("Enter the password: ");
+
+  if (username === "admin" && password === "1234") {
+    console.log("Access Granted");
+  } else {
+    console.log("Invalid Login.");
+  }
+}
+
+// Q9 — Weekend Promotion (Logical OR)
+async function q9() {
+  const day = (await ask("Enter the day, for example Friday: ")).toLowerCase();
+  const amount = await askNumber("Enter the purchase amount: ");
+
+  if (day === "friday" || amount >= 200) {
+    console.log("Special promotion!");
+  } else {
+    console.log("No promotion.");
+  }
+}
+
+// Q10 — Student Grade
+async function q10() {
+  const mark = await askNumber("Enter the mark (0 to 100): ");
+
+  if (mark < 0 || mark > 100) {
+    console.log("Invalid mark.");
+  } else if (mark >= 80) {
+    console.log("Grade A");
+  } else if (mark >= 70) {
+    console.log("Grade B");
+  } else if (mark >= 60) {
+    console.log("Grade C");
+  } else if (mark >= 50) {
+    console.log("Grade D");
+  } else {
+    console.log("Grade F");
+  }
+}
+
+// Q11 — Restaurant Service Rating
+async function q11() {
+  const rating = await askNumber("Rate the service from 1 to 5: ");
+
+  if (rating === 5) {
+    console.log("Excellent service!");
+  } else if (rating === 4) {
+    console.log("Very good service.");
+  } else if (rating === 3) {
+    console.log("Good service.");
+  } else if (rating === 2) {
+    console.log("Fair service.");
+  } else if (rating === 1) {
+    console.log("Poor service.");
+  } else {
+    console.log("The rating must be from 1 to 5.");
+  }
+}
+
+// Q12 — ATM Menu (Switch)
+async function q12() {
+  const option = await askNumber("Choose: 1 = Check Balance, 2 = Deposit, 3 = Withdraw, 4 = Exit: ");
+
+  switch (option) {
+    case 1:
+      console.log("Check Balance selected.");
+      break;
+    case 2:
+      console.log("Deposit selected.");
+      break;
+    case 3:
+      console.log("Withdraw selected.");
+      break;
+    case 4:
+      console.log("Exit selected.");
+      break;
+    default:
+      console.log("Invalid Option");
+  }
+}
+
+// Q13 — Traffic Light (Switch)
+async function q13() {
+  const color = (await ask("Enter red, yellow, or green: ")).toLowerCase();
+
+  switch (color) {
+    case "red":
+      console.log("Stop");
+      break;
+    case "yellow":
+      console.log("Get Ready");
+      break;
+    case "green":
+      console.log("Go");
+      break;
+    default:
+      console.log("Invalid Color");
+  }
+}
+
+// Q14 — Weekly Sales (For Loop)
+async function q14() {
+  let totalSales = 0;
+
+  for (let day = 1; day <= 7; day++) {
+    const sale = await askNumber(`Enter sales for day ${day}: `);
+    console.log(`Sales for day ${day}: ${sale}`);
+    totalSales += sale;
+  }
+
+  console.log(`Total sales for the week: ${totalSales}`);
+}
+
+// Q15 — Multiplication Practice
+async function q15() {
+  const number = await askNumber("Enter a number: ");
+
+  for (let i = 1; i <= 10; i++) {
+    console.log(`${number} x ${i} = ${number * i}`);
+  }
+}
+
+// Q16 — Classroom Numbering
+async function q16() {
+  for (let number = 1; number <= 30; number++) {
+    console.log(`Student ${number}`);
+  }
+}
+
+// Q17 — PIN Attempts (While Loop)
+// The correct PIN in this example is 1234.
+async function q17() {
+  const correctPIN = "1234";
+  let pin = "";
+
+  while (pin !== correctPIN) {
+    pin = await ask("Enter the PIN: ");
+  }
+
+  console.log("Correct PIN. Access granted.");
+}
+
+// Q18 — Customer Data Entry (Do...While Loop)
+// Enter -1 to stop entering amounts.
+async function q18() {
+  let total = 0;
+  let amount;
+
+  do {
+    amount = await askNumber("Enter a purchase amount (-1 to stop): ");
+
+    if (amount >= 0) {
+      total += amount;
+    }
+  } while (amount !== -1);
+
+  console.log(`Total purchases: ${total}`);
+}
+
+// Q19 — Skip Unavailable Products (Continue and Break)
+async function q19() {
+  for (let id = 1; id <= 20; id++) {
+    if (id === 7 || id === 12 || id === 18) {
+      continue;
+    }
+
+    console.log(`Product ${id}`);
+
+    if (id === 20) {
+      break;
+    }
+  }
+}
+
+// Q20 — Classroom Seating Pattern (Nested Loops)
+async function q20() {
+  for (let row = 1; row <= 5; row++) {
+    let seats = "";
+
+    for (let seat = 1; seat <= 6; seat++) {
+      seats += `[R${row}-S${seat}] `;
+    }
+
+    console.log(seats);
+  }
+}
+
+// Q21 — Mini School Management System
+// Assumption: exam eligibility requires attendance >= 75% and mark >= 50.
+async function q21() {
+  const classMarks = [[], []];
+  let choice;
+
+  do {
+    console.log("\n1 = Enter Student Result");
+    console.log("2 = Check Attendance");
+    console.log("3 = Display Grade Statistics");
+    console.log("4 = Exit");
+
+    choice = await askNumber("Choose an option: ");
+
+    switch (choice) {
+      case 1: {
+        const mark = await askNumber("Enter the mark (0 to 100): ");
+
+        if (mark < 0 || mark > 100) {
+          console.log("Invalid mark. Try again.");
+          continue;
+        }
+
+        const classNumber = await askNumber("Enter class number 1 or 2: ");
+
+        if (classNumber !== 1 && classNumber !== 2) {
+          console.log("Enter class 1 or 2.");
+          continue;
+        }
+
+        classMarks[classNumber - 1].push(mark);
+        console.log("The result has been saved.");
+        break;
+      }
+
+      case 2: {
+        const mark = await askNumber("Enter the student's mark: ");
+        const attendance = await askNumber("Enter attendance percentage: ");
+
+        if (attendance >= 75 && mark >= 50) {
+          console.log("The student is eligible to sit for the examination.");
+        } else {
+          console.log("The student is not eligible to sit for the examination.");
+        }
+        break;
+      }
+
+      case 3: {
+        // Outer loop: classes. Inner loop: marks in each class.
+        for (let c = 0; c < classMarks.length; c++) {
+          let total = 0;
+
+          for (let s = 0; s < classMarks[c].length; s++) {
+            total += classMarks[c][s];
+          }
+
+          const count = classMarks[c].length;
+          const average = count === 0 ? 0 : total / count;
+
+          console.log(
+            `Class ${c + 1}: students ${count}, average ${average}`
+          );
+        }
+        break;
+      }
+
+      case 4:
+        console.log("The program has ended.");
+        break;
+
+      default:
+        console.log("Invalid option. Choose 1 to 4.");
+    }
+  } while (choice !== 4);
+}
+
+// Enter 0 to run all questions, or 1 to 21 to run one question.
+async function main() {
+  const questions = [
+    q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11,
+    q12, q13, q14, q15, q16, q17, q18, q19, q20, q21
+  ];
+
+  const number = await askNumber("Enter 0 for all questions, or enter a question number 1 to 21: ");
+
+  if (number === 0) {
+    for (let i = 0; i < questions.length; i++) {
+      console.log(`\n========== QUESTION ${i + 1} ==========`);
+      await questions[i]();
+    }
+  } else if (Number.isInteger(number) && number >= 1 && number <= 21) {
+    await questions[number - 1]();
+  } else {
+    console.log("Choose a number from 0 to 21.");
+  }
+
+}
+
+main().catch((error) => console.log(error.message));
     </script>
 </body>
 </html>
